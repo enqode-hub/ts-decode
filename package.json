@@ -1,7 +1,7 @@
 {
   "name": "@enqode/ts-decode",
   "version": "1.0.0",
-  "description": "Typesafe & flexible json decoder",
+  "description": "Typesafe data decoding for TypeScript",
   "author": "Ricard Derheim <r@enqode.de>",
   "license": "MIT",
   "repository": {
