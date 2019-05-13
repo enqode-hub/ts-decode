@@ -1,0 +1,32 @@
+{
+  "name": "@enqode/ts-decode",
+  "version": "1.0.0",
+  "description": "Typesafe & flexible json decoder",
+  "author": "Ricard Derheim <r@enqode.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enqode-hub/ts-deqode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enqode-hub/ts-deqode/issues"
+  },
+  "homepage": "https://github.com/enqode-hub/ts-deqode#readme",
+  "scripts": {
+    "publish": "npm publish --access public",
+    "build": "tsc --build tsconfig.json",
+    "test": "jest"
+  },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.12",
+    "@types/node": "^11.13.8",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
+  }
+}
