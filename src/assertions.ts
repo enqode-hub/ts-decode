@@ -10,7 +10,7 @@ export const isString: Assert<string> = (input: any): input is string =>
   typeof input === 'string'
 
 export const isNumber: Assert<number> = (input: any): input is number =>
-  typeof input === 'number'
+  typeof input === 'number' && !Number.isNaN(input)
 
 export const isInt: Assert<number> = (input: any): input is number =>
   Number.isInteger(input)
