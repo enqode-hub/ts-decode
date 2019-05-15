@@ -11,6 +11,7 @@ export type DecoderOf<T> = {
 }
 
 export const ok = <T>(value: T): DecoderResult<T> => ({ ok: true, result: value })
+
 export const fail = <T>(): DecoderResult<T> => ({ ok: false })
 
 export const boolean = (): Decoder<boolean> =>
