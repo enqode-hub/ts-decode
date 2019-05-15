@@ -1,4 +1,4 @@
-import { number, string, object, array, is, DecoderOf } from './../src/decoders'
+import * as D from './../src'
 
 type Group = {
   id: number
@@ -6,16 +6,34 @@ type Group = {
 }
 
 type User = {
+  id: number
   username: string
   password: string
   group: Group
 }
 
-const userShape: DecoderOf<User> = {
-  username: string(),
-  password: string(),
-  group: object({
-    id: number(),
-    label: string(),
-  }),
+const decodeUser = D.object<User>({
+  id: D.number(),
+  username: D.string(),
+  password: D.string(),
+  group: D.object<Group>({
+    id: D.number(),
+    label: D.string(),
+  })
+})
+
+const json = `
+  {
+    "id": 123,
+    "username": "deqode",
+    "password": "secret",
+    "group":{
+      "id": 456,
+      "label": "devs"
+    }
+  }
+`
+const decodeUserResult = decodeUser(JSON.parse(json))
+if(decodeUserResult.ok){
+  console.log(decodeUserResult.result)
 }
