@@ -14,7 +14,7 @@
   "homepage": "https://github.com/enqode-hub/ts-deqode#readme",
   "scripts": {
     "publish": "npm publish --access public",
-    "build": "tsc --build tsconfig.json",
+    "build": "rm -rf ./dist && tsc --build tsconfig.json",
     "test": "jest"
   },
   "main": "dist/index.js",
