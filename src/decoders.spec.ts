@@ -135,17 +135,33 @@ test('D.array()', () => {
 })
 
 /**
- * Tuple
+ * Pair
  */
-test('D.tuple()', () => {
-  const decode = D.tuple<[string, number]>([
+test('D.pair()', () => {
+  const decode = D.pair<string, number>(
     D.string(),
     D.number(),
-  ])
+  )
   expect(decode(null)).toEqual(fail())
   expect(decode({})).toEqual(fail())
   expect(decode([])).toEqual(fail())
   expect(decode([1])).toEqual(fail())
   expect(decode([1, "2"])).toEqual(fail())
   expect(decode(["1", 2])).toEqual(ok(["1", 2]))
+})
+
+/**
+ * Pair of A
+ */
+test('D.pairOf()', () => {
+  const decode = D.pairOf<string>(
+    D.string()
+  )
+  expect(decode(null)).toEqual(fail())
+  expect(decode({})).toEqual(fail())
+  expect(decode([])).toEqual(fail())
+  expect(decode([1])).toEqual(fail())
+  expect(decode([1, "2"])).toEqual(fail())
+  expect(decode(["1", 2])).toEqual(fail())
+  expect(decode(["1", "2"])).toEqual(ok(["1", "2"]))
 })

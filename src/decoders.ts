@@ -58,18 +58,46 @@ export const array = <T>(decoder: Decoder<T>): Decoder<T[]> =>
     return ok(result)
   }
 
-export const tuple = <T>(decoders: Decoder<any>[]): Decoder<T[]> =>
+export const pair = <A, B>(a: Decoder<A>, b: Decoder<B>): Decoder<[A, B]> =>
   (input: any) => {
-    const result = []
     if(!A.isArray(input)){
       return fail()
     }
-    for(let i=0; i<decoders.length; i++){
-      const value = decoders[i](input[i])
-      if(!value.ok){
-        return fail()
-      }
-      result.push(value.result)
+
+    const resultA = a(input[0])
+    if(!resultA.ok){
+      return fail()
     }
-    return ok(result)
+
+    const resultB = b(input[1])
+    if(!resultB.ok){
+      return fail()
+    }
+
+    return ok([
+      resultA.result,
+      resultB.result
+    ])
+  }
+
+export const pairOf = <A>(a: Decoder<A>): Decoder<[A, A]> =>
+  (input: any) => {
+    if(!A.isArray(input)){
+      return fail()
+    }
+
+    const resultA = a(input[0])
+    if(!resultA.ok){
+      return fail()
+    }
+
+    const resultB = a(input[1])
+    if(!resultB.ok){
+      return fail()
+    }
+
+    return ok([
+      resultA.result,
+      resultB.result
+    ])
   }
