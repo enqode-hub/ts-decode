@@ -7,5 +7,8 @@
     "strict": true,
     "esModuleInterop": true,
     "lib": [ "dom", "es2017" ]
-  }
+  },
+  "include":[
+    "./src/index.ts"
+  ]
 }
