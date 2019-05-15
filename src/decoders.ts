@@ -10,8 +10,8 @@ export type DecoderOf<T> = {
   [P in keyof T]: Decoder<T[P]>
 }
 
-const ok = <T>(value: T): DecoderResult<T> => ({ ok: true, result: value })
-const fail = <T>(): DecoderResult<T> => ({ ok: false })
+export const ok = <T>(value: T): DecoderResult<T> => ({ ok: true, result: value })
+export const fail = <T>(): DecoderResult<T> => ({ ok: false })
 
 export const boolean = (): Decoder<boolean> =>
   (input: any) => A.isBoolean(input) ? ok(input) : fail()
