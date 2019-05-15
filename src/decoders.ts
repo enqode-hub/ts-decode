@@ -85,19 +85,6 @@ export const pairOf = <A>(a: Decoder<A>): Decoder<[A, A]> =>
     if(!A.isArray(input)){
       return fail()
     }
-
-    const resultA = a(input[0])
-    if(!resultA.ok){
-      return fail()
-    }
-
-    const resultB = a(input[1])
-    if(!resultB.ok){
-      return fail()
-    }
-
-    return ok([
-      resultA.result,
-      resultB.result
-    ])
+    const result = array<A>(a)([ input[0], input[1] ])
+    return result.ok ? ok(input) : fail()
   }
