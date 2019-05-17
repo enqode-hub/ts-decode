@@ -165,3 +165,22 @@ test('D.pairOf()', () => {
   expect(decode(["1", 2])).toEqual(fail())
   expect(decode(["1", "2"])).toEqual(ok(["1", "2"]))
 })
+
+/**
+ * Tuple
+ */
+test('D.tuple()', () => {
+  const decode = D.tuple<[number, string, number | undefined]>([
+    D.number(),
+    D.string(),
+    D.optional(D.number()),
+  ])
+  expect(decode([1, 2])).toEqual(fail())
+  expect(decode(['1', 2])).toEqual(fail())
+  expect(decode(['1', '2'])).toEqual(fail())
+  expect(decode([1, '2'])).toEqual(ok([1, '2']))
+  expect(decode([1, '2'])).toEqual(ok([1, '2']))
+  expect(decode([1, '2', '3'])).toEqual(fail())
+  expect(decode([1, '2', 3])).toEqual(ok([1, '2', 3]))
+  expect(decode(null)).toEqual(fail())
+})

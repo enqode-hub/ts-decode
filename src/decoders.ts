@@ -88,3 +88,19 @@ export const pairOf = <A>(a: Decoder<A>): Decoder<[A, A]> =>
     const result = array<A>(a)([ input[0], input[1] ])
     return result.ok ? ok(input) : fail()
   }
+
+export const tuple = <T extends [...any[]]>(decoders: DecoderOf<T>): Decoder<T> =>
+  (input: any) => {
+    if(!A.isArray(input)){
+      return fail()
+    }
+    const result = []
+    for(let i=0; i<input.length; i++){
+      const value = decoders[i](input[i])
+      if(!value.ok){
+        return fail()
+      }
+      result.push(value.result)
+    }
+    return ok(result as T)
+  }
