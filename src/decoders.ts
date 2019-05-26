@@ -2,17 +2,18 @@ import * as A from './assertions'
 
 export type DecoderResult<T> = { ok: true, result: T } | { ok: false }
 
-export type Decoder<T> = {
-  (input: any): DecoderResult<T>
-}
+export type Decoder<T> =
+  (input: any) => DecoderResult<T>
 
 export type DecoderOf<T> = {
   [P in keyof T]: Decoder<T[P]>
 }
 
-export const ok = <T>(value: T): DecoderResult<T> => ({ ok: true, result: value })
+export const ok = <T>(value: T): DecoderResult<T> =>
+  ({ ok: true, result: value })
 
-export const fail = <T>(): DecoderResult<T> => ({ ok: false })
+export const fail = <T>(): DecoderResult<T> =>
+  ({ ok: false })
 
 export const boolean = (): Decoder<boolean> =>
   (input: any) => A.isBoolean(input) ? ok(input) : fail()
@@ -58,44 +59,14 @@ export const array = <T>(decoder: Decoder<T>): Decoder<T[]> =>
     return ok(result)
   }
 
-export const pair = <A, B>(a: Decoder<A>, b: Decoder<B>): Decoder<[A, B]> =>
-  (input: any) => {
-    if(!A.isArray(input)){
-      return fail()
-    }
-
-    const resultA = a(input[0])
-    if(!resultA.ok){
-      return fail()
-    }
-
-    const resultB = b(input[1])
-    if(!resultB.ok){
-      return fail()
-    }
-
-    return ok([
-      resultA.result,
-      resultB.result
-    ])
-  }
-
-export const pairOf = <A>(a: Decoder<A>): Decoder<[A, A]> =>
-  (input: any) => {
-    if(!A.isArray(input)){
-      return fail()
-    }
-    const result = array<A>(a)([ input[0], input[1] ])
-    return result.ok ? ok(input) : fail()
-  }
-
 export const tuple = <T extends [...any[]]>(decoders: DecoderOf<T>): Decoder<T> =>
   (input: any) => {
     if(!A.isArray(input)){
       return fail()
     }
     const result = []
-    for(let i=0; i<input.length; i++){
+    const length = decoders.length > input.length ? decoders.length : input.length
+    for(let i=0; i<length; i++){
       const value = decoders[i](input[i])
       if(!value.ok){
         return fail()
@@ -104,3 +75,9 @@ export const tuple = <T extends [...any[]]>(decoders: DecoderOf<T>): Decoder<T> 
     }
     return ok(result as T)
   }
+
+export const pair = <A, B>(a: Decoder<A>, b: Decoder<B>): Decoder<[A, B]> =>
+  tuple<[A, B]>([ a, b ])
+
+export const pairOf = <A>(decoder: Decoder<A>): Decoder<[A, A]> =>
+  tuple<[A, A]>([ decoder, decoder ])
