@@ -1,4 +1,3 @@
-
 export type Assert<T> = {
   (input: any): boolean
 }
