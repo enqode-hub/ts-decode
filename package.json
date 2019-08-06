@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enqode-hub/ts-deqode.git"
+    "url": "git+https://github.com/enqode-hub/ts-decode.git"
   },
   "bugs": {
-    "url": "https://github.com/enqode-hub/ts-deqode/issues"
+    "url": "https://github.com/enqode-hub/ts-decode/issues"
   },
-  "homepage": "https://github.com/enqode-hub/ts-deqode#readme",
+  "homepage": "https://github.com/enqode-hub/ts-decode#readme",
   "scripts": {
     "publish": "npm publish --access public",
     "build": "rm -rf ./dist && tsc --build tsconfig.build.json",
