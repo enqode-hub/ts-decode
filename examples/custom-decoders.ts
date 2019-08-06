@@ -1,5 +1,4 @@
 import * as D from './../src'
-import { isString } from './../src';
 
 type Superpower =  'freeze' | 'burn' | 'flash'
 
