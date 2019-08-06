@@ -1,6 +1,5 @@
-export type Assert<T> = {
-  (input: any): boolean
-}
+export type Assert<T> =
+  (input: any) => boolean
 
 export const isBoolean: Assert<boolean> = (input: any): input is boolean =>
   typeof input === 'boolean'
